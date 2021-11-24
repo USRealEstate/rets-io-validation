@@ -1,29 +1,34 @@
 /* $Header: /usr/local/cvsroot/rets/validation/src/org/realtor/rets/validation/tests/TokenizerTest.java,v 1.1.1.1 2003/11/21 16:20:05 rsegelman Exp $  */
 package org.realtor.rets.validation.tests;
 
-import junit.framework.TestCase;
 
+import org.junit.jupiter.api.Test;
 import org.realtor.rets.validation.RetsTokenParser;
 import org.realtor.rets.validation.operators.*;
 import org.realtor.rets.validation.terms.*;
 
 import java.text.ParseException;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
+
 
 /**
- *  TokenizerTest.java Created Sep 10, 2003
+ * TokenizerTest.java Created Sep 10, 2003
+ * <p>
+ * <p>
+ * Copyright 2003, Avantia inc.
  *
- *
- *  Copyright 2003, Avantia inc.
- *  @version $Revision: 1.1.1.1 $
- *  @author scohen
+ * @author scohen
+ * @version $Revision: 1.1.1.1 $
  */
-public class TokenizerTest extends TestCase {
+public class TokenizerTest {
     private RetsTokenParser tokenizer;
 
     public TokenizerTest() {
     }
 
+    @Test
     public void testNullExpression() {
         tokenizer.setExpression("");
         assertNull(tokenizer.nextToken());
@@ -195,7 +200,7 @@ public class TokenizerTest extends TestCase {
         String expr = "P1M";
         tokenizer.setExpression(expr);
         assertEquals(expr, DateIntervalTerm.class,
-            tokenizer.nextToken().getClass());
+                tokenizer.nextToken().getClass());
     }
 
     public void testVariables() {
@@ -234,14 +239,14 @@ public class TokenizerTest extends TestCase {
         tokenizer.setExpression(expr);
         assertCorrectOperator(tokenizer.nextToken(), new OpenParen());
         assertEquals(((Term) tokenizer.nextToken()).getValue(),
-            new DateTerm("2003-09-18").getValue());
+                new DateTerm("2003-09-18").getValue());
         assertCorrectOperator(tokenizer.nextToken(), new SubtractionOperator());
         assertEquals(((Term) tokenizer.nextToken()).getValue(),
-            new DateIntervalTerm("P1D").getValue());
+                new DateIntervalTerm("P1D").getValue());
         assertCorrectOperator(tokenizer.nextToken(), new CloseParen());
         assertCorrectOperator(tokenizer.nextToken(), new GreaterThanOperator());
         assertEquals(new DateTerm("2003-09-17").getValue(),
-            ((DateTerm) tokenizer.nextToken()).getValue());
+                ((DateTerm) tokenizer.nextToken()).getValue());
     }
 
     public void assertCorrectOperator(Object toTest, Operator expected) {
