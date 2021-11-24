@@ -1,11 +1,12 @@
 /* $Header: /usr/local/cvsroot/rets/validation/src/org/realtor/rets/validation/tests/DateIntervalTest.java,v 1.1.1.1 2003/11/21 16:20:05 rsegelman Exp $  */
 package org.realtor.rets.validation.tests;
 
-import junit.framework.TestCase;
-
+import org.junit.jupiter.api.Test;
 import org.realtor.rets.validation.terms.DateIntervalTerm;
 
 import java.text.ParseException;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 
 /**
@@ -16,9 +17,10 @@ import java.text.ParseException;
  *  @version $Revision: 1.1.1.1 $
  *  @author scohen
  */
-public class DateIntervalTest extends TestCase {
+public class DateIntervalTest {
     private DateIntervalTerm term;
 
+    @Test
     public void testDays() throws ParseException {
         term.setInterval("P15D");
         assertEquals(new Integer(15), new Integer(term.getDays()));

@@ -1,7 +1,7 @@
 /* $Header: /usr/local/cvsroot/rets/validation/src/org/realtor/rets/validation/tests/ParserTest.java,v 1.2 2003/12/04 15:28:33 rsegelman Exp $  */
 package org.realtor.rets.validation.tests;
 
-import junit.framework.TestCase;
+import org.junit.jupiter.api.Test;
 
 import org.realtor.rets.validation.ValidationExpressionEvaluator;
 import org.realtor.rets.validation.terms.*;
@@ -11,18 +11,22 @@ import java.text.ParseException;
 import java.util.HashMap;
 import java.util.Map;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 
 /**
- *  ParserTest.java Created Sep 5, 2003
+ * ParserTest.java Created Sep 5, 2003
+ * <p>
+ * <p>
+ * Copyright 2003, Avantia inc.
  *
- *
- *  Copyright 2003, Avantia inc.
- *  @version $Revision: 1.2 $
- *  @author scohen
+ * @author scohen
+ * @version $Revision: 1.2 $
  */
-public class ParserTest extends TestCase {
+public class ParserTest {
     private ValidationExpressionEvaluator evaluator;
 
+    @Test
     public void testSingleTerm() {
         NumericTerm rv = (NumericTerm) evaluateExpression("5");
 
@@ -246,7 +250,7 @@ public class ParserTest extends TestCase {
 
         try {
             assertEquals(expr, new DateTerm("2002-09-15").getValue(),
-                term.getValue());
+                    term.getValue());
         } catch (ParseException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
@@ -284,11 +288,11 @@ public class ParserTest extends TestCase {
         String expr = "(2003-09-15 + P1D)";
         Term term = evaluateExpression(expr);
         assertEquals(expr, new DateTerm("2003-09-16").getValue(),
-            term.getValue());
+                term.getValue());
         expr = "(2003-09-15 - P1D)";
         term = evaluateExpression(expr);
         assertEquals(expr, new DateTerm("2003-09-14").getValue(),
-            term.getValue());
+                term.getValue());
     }
 
     public void testDateSubtraction() {
@@ -327,7 +331,7 @@ public class ParserTest extends TestCase {
         expr = "(2003-09-19 -  P1D)";
         term = evaluateExpression(expr);
         assertEquals(expr, new DateTerm("2003-09-18").getValue(),
-            term.getValue());
+                term.getValue());
     }
 
     public void testComplexDateMath() throws Exception {

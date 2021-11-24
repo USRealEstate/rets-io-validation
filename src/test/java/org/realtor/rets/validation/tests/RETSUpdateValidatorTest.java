@@ -1,7 +1,7 @@
 /* $Header: /usr/local/cvsroot/rets/validation/src/org/realtor/rets/validation/tests/RETSUpdateValidatorTest.java,v 1.1.1.1 2003/11/21 16:20:05 rsegelman Exp $  */
 package org.realtor.rets.validation.tests;
 
-import junit.framework.TestCase;
+import org.junit.jupiter.api.Test;
 
 import org.realtor.rets.util.XMLUtils;
 import org.realtor.rets.validation.RETSUpdateValidator;
@@ -19,6 +19,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 
 /**
  *  RETSUpdateValidatorTest.java Created Sep 26, 2003
@@ -28,7 +30,7 @@ import java.util.Map;
  *  @version $Revision: 1.1.1.1 $
  *  @author scohen
  */
-public class RETSUpdateValidatorTest extends TestCase {
+public class RETSUpdateValidatorTest  {
     private static boolean setUp = false;
     private static Document doc;
     private static List list;
