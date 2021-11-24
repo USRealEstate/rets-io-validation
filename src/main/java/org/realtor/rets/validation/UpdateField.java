@@ -1,13 +1,13 @@
 /* $Header: /usr/local/cvsroot/rets/validation/src/org/realtor/rets/validation/UpdateField.java,v 1.4 2005/03/30 21:41:53 ekovach Exp $  */
 package org.realtor.rets.validation;
 
-import org.apache.log4j.Category;
-
 import org.apache.xpath.XPathAPI;
 
 import org.realtor.rets.validation.terms.InvalidTermException;
 import org.realtor.rets.validation.terms.Term;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.w3c.dom.Node;
 
 import java.util.ArrayList;
@@ -19,15 +19,16 @@ import javax.xml.transform.TransformerException;
 
 
 /**
- *  UpdateField.java Created Sep 26, 2003
+ * UpdateField.java Created Sep 26, 2003
+ * <p>
+ * <p>
+ * Copyright 2003, Avantia inc.
  *
- *
- *  Copyright 2003, Avantia inc.
- *  @version $Revision: 1.4 $
- *  @author scohen
+ * @author scohen
+ * @version $Revision: 1.4 $
  */
 public class UpdateField implements Comparable {
-    static Category cat = Category.getInstance(UpdateField.class);
+    private final static Logger logger = LoggerFactory.getLogger(UpdateField.class);
     private ValidationError error;
     private int sequence;
     private int[] attributes;
@@ -53,8 +54,7 @@ public class UpdateField implements Comparable {
             validateHelpID = getElementValue(toBuild, "ValidateHelpID");
             try {
                 sequence = Integer.parseInt(getElementValue(toBuild, "Sequence"));
-            }
-            catch (NumberFormatException e) {
+            } catch (NumberFormatException e) {
                 sequence = 0;
             }
             attributes = parseAttributes(getElementValue(toBuild, "Attributes"));
@@ -62,26 +62,27 @@ public class UpdateField implements Comparable {
             initExpressions(toBuild);
             def = getElementValue(toBuild, "Default");
         } catch (Exception e) {
-            cat.error("error: ", e);
+            logger.error("error: ", e);
         }
     }
 
     /**
-     * @param string
+     * @param expression
+     * @throws TransformerException
      */
     private void initExpressions(Node expression) throws TransformerException {
         String idList = getElementValue(expression, "ValidationExpressionID");
         if (idList != null) {
-	        String[] expressionNames = idList.split(",");
-	        System.out.println("For string " + idList +
-	            " the split returned an array of length " + expressionNames.length);
-	
-	        for (int i = 0; i < expressionNames.length; i++) {
-	            ValidationExpression current = new ValidationExpression(expressionNames[i]);
-	            validationExpressions.add(current);
-	            System.out.println(this.systemName + ".expressions[" + i + "]:" +
-	                expressionNames[i]);
-	        }
+            String[] expressionNames = idList.split(",");
+            System.out.println("For string " + idList +
+                    " the split returned an array of length " + expressionNames.length);
+
+            for (int i = 0; i < expressionNames.length; i++) {
+                ValidationExpression current = new ValidationExpression(expressionNames[i]);
+                validationExpressions.add(current);
+                System.out.println(this.systemName + ".expressions[" + i + "]:" +
+                        expressionNames[i]);
+            }
         }
     }
 
@@ -100,7 +101,7 @@ public class UpdateField implements Comparable {
                 try {
                     rv[i] = Integer.parseInt(atts[i]);
                 } catch (NumberFormatException e) {
-                    cat.error("error: ", e);
+                    logger.error("error: ", e);
                 }
             }
         }
@@ -109,7 +110,7 @@ public class UpdateField implements Comparable {
     }
 
     private String getElementValue(Node toQuery, String nodeName)
-        throws TransformerException {
+            throws TransformerException {
         Node selected = XPathAPI.selectSingleNode(toQuery, nodeName +
                 "/text()");
 
@@ -227,7 +228,7 @@ public class UpdateField implements Comparable {
     }
 
     /**
-     * @param string
+     * @param expressions
      */
     public void setValidationExpressions(List expressions) {
         validationExpressions.clear();
@@ -241,9 +242,9 @@ public class UpdateField implements Comparable {
 
         boolean accepted = false;
         System.out.println("Validating field " + getSystemName() +
-            " there are " + validationExpressions.size() + " expressions");
+                " there are " + validationExpressions.size() + " expressions");
 
-        for (Iterator iter = validationExpressions.iterator(); iter.hasNext();) {
+        for (Iterator iter = validationExpressions.iterator(); iter.hasNext(); ) {
             ValidationExpression expression = (ValidationExpression) iter.next();
             String type = expression.getType();
             String exprText = expression.getExpression();
@@ -257,7 +258,7 @@ public class UpdateField implements Comparable {
 
                 if (equalsPos < 0) {
                     System.out.println("Couldn't find an equals in expression " +
-                        exprText);
+                            exprText);
 
                     continue;
                 } else {
@@ -278,7 +279,7 @@ public class UpdateField implements Comparable {
                         type.equals("REJECT")) {
                     error = new ValidationError(getSystemName(),
                             " failed validation because " +
-                            expression.getExpression());
+                                    expression.getExpression());
 
                     break;
                 } else if (TRUE.equals(result.getValue()) &&
@@ -288,7 +289,7 @@ public class UpdateField implements Comparable {
                 }
             } catch (InvalidTermException e) {
                 // TODO Auto-generated catch block
-                cat.error("error: ", e);
+                logger.error("error: ", e);
                 error = new ValidationError(getSystemName(),
                         " failed because " + e.getMessage());
             }
