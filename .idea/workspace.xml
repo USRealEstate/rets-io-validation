@@ -4,15 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="1f5b9ed0-7c44-465a-accb-a099fb6136f8" name="Changes" comment="USRE-76 Delete Ant related">
-      <change beforePath="$PROJECT_DIR$/.classpath" beforeDir="false" />
+    <list default="true" id="76704717-455c-4872-b28a-e98b69249b4a" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/org/realtor/rets/validation/tests/ParserTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/org/realtor/rets/validation/tests/ParserTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/org/realtor/rets/validation/tests/TokenizerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/org/realtor/rets/validation/tests/TokenizerTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -20,9 +13,15 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="build_maker" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="UPDATE_TYPE" value="REBASE" />
   </component>
-  <component name="ProjectId" id="21Mlm6oiNs0tPyJcZXPMdiWESpz" />
+  <component name="ProjectId" id="21MnQaaovzmEunDKSvCdM6hoOax" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -30,13 +29,11 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
-    <property name="TF_FMT" value="false" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-  </component>
-  <component name="RecentsManager">
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\WorkDir\USRealEstate\Source-Code\rets-io-validation\src\main\resources" />
-    </key>
+    <property name="node.js.detected.package.eslint" value="true" />
+    <property name="node.js.detected.package.tslint" value="true" />
+    <property name="node.js.selected.package.eslint" value="(autodetect)" />
+    <property name="node.js.selected.package.tslint" value="(autodetect)" />
   </component>
   <component name="RunManager">
     <configuration default="true" type="DjangoTestsConfigurationType">
@@ -58,6 +55,22 @@
       <option name="USE_OPTIONS" value="false" />
       <option name="OPTIONS" value="" />
       <method v="2" />
+    </configuration>
+    <configuration name="VariableTest.testStaticVariableChange" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="rets-io-validation" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="org.realtor.rets.validation.tests.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="org.realtor.rets.validation.tests" />
+      <option name="MAIN_CLASS_NAME" value="org.realtor.rets.validation.tests.VariableTest" />
+      <option name="METHOD_NAME" value="testStaticVariableChange" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
     </configuration>
     <configuration default="true" type="JetRunConfigurationType">
       <method v="2">
@@ -148,26 +161,22 @@
       <option name="USE_PATTERN" value="false" />
       <method v="2" />
     </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="JUnit.VariableTest.testStaticVariableChange" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="1f5b9ed0-7c44-465a-accb-a099fb6136f8" name="Changes" comment="" />
-      <created>1637758993455</created>
+      <changelist id="76704717-455c-4872-b28a-e98b69249b4a" name="Changes" comment="" />
+      <created>1637759809747</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1637758993455</updated>
-      <workItem from="1637758995702" duration="428000" />
-      <workItem from="1637759472645" duration="236000" />
+      <updated>1637759809747</updated>
+      <workItem from="1637759812274" duration="794000" />
     </task>
-    <task id="LOCAL-00001" summary="USRE-76 Delete Ant related">
-      <created>1637759416750</created>
-      <option name="number" value="00001" />
-      <option name="presentableId" value="LOCAL-00001" />
-      <option name="project" value="LOCAL" />
-      <updated>1637759416750</updated>
-    </task>
-    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -183,10 +192,5 @@
         </entry>
       </map>
     </option>
-    <option name="oldMeFiltersMigrated" value="true" />
-  </component>
-  <component name="VcsManagerConfiguration">
-    <MESSAGE value="USRE-76 Delete Ant related" />
-    <option name="LAST_COMMIT_MESSAGE" value="USRE-76 Delete Ant related" />
   </component>
 </project>
