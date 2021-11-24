@@ -12,7 +12,6 @@
     <description>Demo for Framework Orm Factory Query Data</description>
     <url>https://github.com/USRealEstate/rets-io-validation.git</url>
 
-
     <developers>
         <developer>
             <name>YuCheng Hu</name>
@@ -25,7 +24,6 @@
             </roles>
         </developer>
     </developers>
-
 
     <dependencies>
         <dependency>
@@ -58,7 +56,6 @@
             <version>5.7.0</version>
             <scope>test</scope>
         </dependency>
-
     </dependencies>
 
     <build>
