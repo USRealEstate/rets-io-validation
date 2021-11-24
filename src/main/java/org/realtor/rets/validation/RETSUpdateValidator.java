@@ -28,12 +28,13 @@ import org.w3c.dom.NodeList;
 
 
 /**
- *  RETSUpdateValidator.java Created Sep 26, 2003
+ * RETSUpdateValidator.java Created Sep 26, 2003
+ * <p>
+ * <p>
+ * Copyright 2003, Avantia inc.
  *
- *
- *  Copyright 2003, Avantia inc.
- *  @version $Revision: 1.4 $
- *  @author scohen
+ * @author scohen
+ * @version $Revision: 1.4 $
  */
 public class RETSUpdateValidator {
     // log4j category
@@ -56,10 +57,10 @@ public class RETSUpdateValidator {
     private Map symbolTable;
 
     /**
-        A HashMap of field types to Term class types.
+     * A HashMap of field types to Term class types.
      */
     private static HashMap termTypeMap = new HashMap();
-    
+
     static {
         // initialize the termTypeMap
         termTypeMap.put("Date", DateTerm.class);
@@ -69,14 +70,14 @@ public class RETSUpdateValidator {
         termTypeMap.put("Long", NumericTerm.class);
         termTypeMap.put("Tiny", NumericTerm.class);
     }
-    
+
     public RETSUpdateValidator() {
         validationExpressions = new Hashtable();
         userInfo = new Hashtable();
     }
 
     public RETSUpdateValidator(String resource,
-        String className, String type) {
+                               String className, String type) {
         this();
         updateResource = resource;
         updateClass = className;
@@ -107,7 +108,7 @@ public class RETSUpdateValidator {
             }
         }
     }
-    
+
     public void setSymbolTable(Map table) {
         // call parseEntries first because there aren't names like .TODAY. in the metadata.
         Map symbols = parseEntries(table);
@@ -125,7 +126,7 @@ public class RETSUpdateValidator {
         HashMap rv = new HashMap();
         RetsTokenParser parser = new RetsTokenParser();
 
-        for (Iterator iter = table.keySet().iterator(); iter.hasNext();) {
+        for (Iterator iter = table.keySet().iterator(); iter.hasNext(); ) {
             String key = (String) iter.next();
             Object value = table.get(key);
             String entry = null;
@@ -145,13 +146,12 @@ public class RETSUpdateValidator {
                     termTypeClass = StringTerm.class;
                 }
                 try {
-                    Constructor constructor = termTypeClass.getConstructor(new Class [] {String.class});
-                    AbstractTerm term = (AbstractTerm) constructor.newInstance(new Object [] {entry});
+                    Constructor constructor = termTypeClass.getConstructor(new Class[]{String.class});
+                    AbstractTerm term = (AbstractTerm) constructor.newInstance(new Object[]{entry});
                     rv.put(key, term);
                     logger.debug("Added value: " + key + " = " + term);
-                }
-                catch (Exception e) {
-                    logger.debug(e);
+                } catch (Exception e) {
+                    logger.error("Exception", e);
                 }
             }
         }
@@ -161,16 +161,17 @@ public class RETSUpdateValidator {
 
     /**
      * Get the field type from the system name.
+     *
      * @param systemName
      * @return The field type from the system name.
      */
     private String getFieldTypeBySystemName(String systemName) {
         String fieldType = null;
         String query = "//METADATA-RESOURCE/Resource[ResourceID=\"" +
-            updateResource + "\"]/METADATA-CLASS/Class[ClassName=\"" +
-            updateClass + "\"]/METADATA-TABLE[@Resource=\"" + updateResource +
-            "\" and @Class=\"" + updateClass + "\"]/Field[SystemName=\"" +
-            systemName + "\"]/DataType";
+                updateResource + "\"]/METADATA-CLASS/Class[ClassName=\"" +
+                updateClass + "\"]/METADATA-TABLE[@Resource=\"" + updateResource +
+                "\" and @Class=\"" + updateClass + "\"]/Field[SystemName=\"" +
+                systemName + "\"]/DataType";
 
         try {
             Node dataType = XPathAPI.selectSingleNode(metaData.getFirstChild(),
@@ -178,23 +179,24 @@ public class RETSUpdateValidator {
 
             if (dataType != null) {
                 fieldType = dataType.getFirstChild().getNodeValue();
-                cat.debug("SystemName [" + systemName + "] type [" + fieldType + "]");
+                logger.debug("SystemName [" + systemName + "] type [" + fieldType + "]");
             }
         } catch (DOMException e) {
             // TODO Auto-generated catch block
-            cat.error("error: ", e);
+            logger.error("error: ", e);
         } catch (TransformerException e) {
             // TODO Auto-generated catch block
-            cat.error("error: ", e);
+            logger.error("error: ", e);
         }
 
         return fieldType;
     }
 
     /**
-     *  Sets the user information. This takes a comma delimited string
-     *  of the type set by the login transaction. This string takes the following form
-     *  user-id, user-level, user-class, agent-code.
+     * Sets the user information. This takes a comma delimited string
+     * of the type set by the login transaction. This string takes the following form
+     * user-id, user-level, user-class, agent-code.
+     *
      * @param info
      */
     public void setUserInfo(String info) {
@@ -216,18 +218,18 @@ public class RETSUpdateValidator {
     private void getFields() {
         try {
             String query = "//METADATA-RESOURCE/Resource[ResourceID=\"" +
-                updateResource + "\"]/METADATA-CLASS/Class[ClassName=\"" +
-                updateClass + "\"]/METADATA-UPDATE/UpdateType[UpdateName=\"" +
-                updateType + "\"]/METADATA-UPDATE_TYPE[@Resource=\"" +
-                updateResource + "\" and @Class=\"" + updateClass +
-                "\" and @Update=\"" + updateType + "\"]/UpdateField";
+                    updateResource + "\"]/METADATA-CLASS/Class[ClassName=\"" +
+                    updateClass + "\"]/METADATA-UPDATE/UpdateType[UpdateName=\"" +
+                    updateType + "\"]/METADATA-UPDATE_TYPE[@Resource=\"" +
+                    updateResource + "\" and @Class=\"" + updateClass +
+                    "\" and @Update=\"" + updateType + "\"]/UpdateField";
 
             NodeList updateFields = XMLUtils.executeXpathQuery(metaData.getFirstChild(),
                     query);
             fieldList = new ArrayList(updateFields.getLength());
 
             for (int i = 0; i < updateFields.getLength(); i++) {
-                cat.debug("Update field# :" + i + "=" + updateFields.item(i));
+                logger.debug("Update field# :" + i + "=" + updateFields.item(i));
 
                 UpdateField uf = new UpdateField(updateFields.item(i));
                 populateValidationExpression(uf, metaData.getFirstChild());
@@ -237,13 +239,13 @@ public class RETSUpdateValidator {
             // this sorts the update fields by sequence number.
             Collections.sort(fieldList);
         } catch (TransformerException e) {
-            cat.error("error: ", e);
+            logger.error("error: ", e);
         }
     }
 
     /**
      * @param uf
-     * @param validation
+     * @param root
      */
     private void populateValidationExpression(UpdateField uf, Node root) {
         if (uf.getValidationExpressions() != null) {
@@ -252,11 +254,11 @@ public class RETSUpdateValidator {
             for (int j = 0; j < expressions.size(); j++) {
                 ValidationExpression expr = (ValidationExpression) expressions.get(j);
                 String query = "//METADATA-RESOURCE/Resource[ResourceID=\"" +
-                    updateResource +
-                    "\"]/METADATA-VALIDATION_EXPRESSION[@Resource=\"" +
-                    updateResource +
-                    "\"]/ValidationExpression[ValidationExpressionID=\"" +
-                    expr.getID() + "\"]";
+                        updateResource +
+                        "\"]/METADATA-VALIDATION_EXPRESSION[@Resource=\"" +
+                        updateResource +
+                        "\"]/ValidationExpression[ValidationExpressionID=\"" +
+                        expr.getID() + "\"]";
 
                 try {
                     Node validation = XPathAPI.selectSingleNode(root, query);
@@ -272,10 +274,10 @@ public class RETSUpdateValidator {
 
                             if ("ValidationExpressionType".equals(nodeName)) {
                                 expressionType = current.getChildNodes().item(0)
-                                                        .getNodeValue();
+                                        .getNodeValue();
                             } else if ("Value".equals(nodeName)) {
                                 expression = current.getChildNodes().item(0)
-                                                    .getNodeValue();
+                                        .getNodeValue();
                             }
                         }
 
@@ -284,10 +286,10 @@ public class RETSUpdateValidator {
                     }
                 } catch (DOMException e) {
                     // TODO Auto-generated catch block
-                    cat.error("error: ", e);
+                    logger.error("error: ", e);
                 } catch (TransformerException e) {
                     // TODO Auto-generated catch block
-                    cat.error("error: ", e);
+                    logger.error("error: ", e);
                 }
 
                 //expressions.add(expr);
