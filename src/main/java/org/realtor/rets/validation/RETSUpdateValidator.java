@@ -13,13 +13,14 @@ import java.util.Map;
 
 import javax.xml.transform.TransformerException;
 
-import org.apache.log4j.Category;
 import org.apache.xpath.XPathAPI;
 import org.realtor.rets.util.XMLUtils;
 import org.realtor.rets.validation.terms.AbstractTerm;
 import org.realtor.rets.validation.terms.DateTerm;
 import org.realtor.rets.validation.terms.NumericTerm;
 import org.realtor.rets.validation.terms.StringTerm;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.w3c.dom.DOMException;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
@@ -36,7 +37,8 @@ import org.w3c.dom.NodeList;
  */
 public class RETSUpdateValidator {
     // log4j category
-    static Category cat = Category.getInstance(RETSUpdateValidator.class);
+    private final static Logger logger = LoggerFactory.getLogger(RETSUpdateValidator.class);
+
     protected static final String AGENT_CODE_KEY = "AGENT-CODE";
     protected static final String USER_CLASS_KEY = "USER-CLASS";
     protected static final String USER_LEVEL_KEY = "USER-LEVEL";
@@ -146,10 +148,10 @@ public class RETSUpdateValidator {
                     Constructor constructor = termTypeClass.getConstructor(new Class [] {String.class});
                     AbstractTerm term = (AbstractTerm) constructor.newInstance(new Object [] {entry});
                     rv.put(key, term);
-                    cat.debug("Added value: " + key + " = " + term);
+                    logger.debug("Added value: " + key + " = " + term);
                 }
                 catch (Exception e) {
-                    cat.error(e);
+                    logger.debug(e);
                 }
             }
         }
